@@ -4,6 +4,7 @@
     style="width: 100%"
     class="common-table-main"
     v-bind="$attrs"
+    v-on="$listeners"
     @sort-change="sortChange"
     @selection-change="selectionChange"
   >
@@ -31,12 +32,24 @@
       :sortable="column.sortable || false"
       :resizable="column.resizable || false"
     >
+      <!-- 自定义当前列表头 -->
+      <template slot="header" slot-scope="scope">
+        <slot
+          v-if="column.headSlotName"
+          :name="column.headSlotName"
+          :rowData="scope"
+        ></slot>
+        <!-- 展示表格数据文本 -->
+        <span v-else class="show-text">{{ column.name }}</span>
+      </template>
+      <!-- 有插槽时，展示插槽内容 -->
       <template slot-scope="scope">
         <slot
           v-if="column.slotname"
           :name="column.slotname"
           :rowData="scope"
         ></slot>
+        <!-- 展示表格数据文本 -->
         <span v-else class="show-text">{{ scope.row[column.prop] }}</span>
       </template>
     </el-table-column>
@@ -78,6 +91,7 @@ export default {
       let data = { column, prop, order };
       this.$emit("sortChange", data);
     },
+    // 选择项变化
     selectionChange(selection) {
       console.log("selection", selection);
     },

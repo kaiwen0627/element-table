@@ -1,10 +1,23 @@
 <template>
   <div id="app">
-    <!-- 组件可直接绑定 Table Attributes-->
-    <common-table :tableConfig="tableConfig" :stripe="true" :border="true">
+    <!-- 组件可直接绑定 Table Attributes 或者 Table Events -->
+    <common-table
+      :tableConfig="tableConfig"
+      :stripe="true"
+      :border="true"
+      @cell-click="cellClick"
+    >
+      <!-- 操作列的 数据 插槽 -->
       <template #editSlot="rowData">
         <div>
           <button @click="binaji(rowData)">编辑</button>
+        </div>
+      </template>
+
+      <!-- 操作列的表头 插槽 -->
+      <template #editHeadSlot>
+        <div>
+          <span style="color:red">操作</span>
         </div>
       </template>
     </common-table>
@@ -44,7 +57,8 @@ export default {
               prop: "address",
             },
             {
-              slotname: "editSlot", // 自定义插槽列
+              slotname: "editSlot", // 自定义插槽列名称
+              headSlotName: "editHeadSlot", //自定义表头插槽名称
               name: "操作",
             },
           ],
@@ -77,6 +91,12 @@ export default {
   methods: {
     binaji(data) {
       console.log("data", data);
+    },
+    cellClick(row, column, cell, event) {
+      console.log("event", event);
+      console.log("cell", cell);
+      console.log("column", column);
+      console.log("row", row);
     },
   },
 };
