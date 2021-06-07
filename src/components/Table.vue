@@ -31,8 +31,13 @@
       :sortable="column.sortable || false"
       :resizable="column.resizable || false"
     >
-      <template v-if="column.slotname" slot-scope="scope">
-        <slot :name="column.slotname" :rowData="scope"></slot>
+      <template slot-scope="scope">
+        <slot
+          v-if="column.slotname"
+          :name="column.slotname"
+          :rowData="scope"
+        ></slot>
+        <span v-else class="show-text">{{ scope.row[column.prop] }}</span>
       </template>
     </el-table-column>
   </el-table>
