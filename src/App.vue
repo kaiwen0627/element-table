@@ -62,6 +62,19 @@ export default {
               name: "操作",
             },
           ],
+          // 是否需要分页
+          hasPagination: true,
+          // 分页配置
+          paginationConfig: {
+            // 分页选项配置
+            pageSizes: [100, 200, 300, 400],
+            // 操作按钮
+            layout: "total,sizes, prev, pager, next",
+            // 当前选择的分页选项
+            pageSize: 100,
+            // 总共条数
+            total: 1000,
+          },
         },
         data: [
           {
